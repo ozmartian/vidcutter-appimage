@@ -26,6 +26,7 @@ install:
 - python3.5 setup.py build_ext -i
 - cd _packaging/appimage
 - "./build.sh"
+- mv "${TRAVIS_BUILD_DIR}/_packaging/appimage/out/VidCutter--x86_64.AppImage" "${TRAVIS_BUILD_DIR}/VidCutter-${BUILD_VERSION}-x64.AppImage"
 
 script: echo "Done!"
 
@@ -38,9 +39,10 @@ before_deploy:
   - git tag -afm v${BUILD_VERSION} ${BUILD_VERSION}
 deploy:
   provider: releases
-  skip_cleanup: true
   api_key:
     secure: aa1y8Qks56bt7YGJupHEufrgTJcc4YmS23UXbVTTqLy8ZMNUe4JL6o5PJGZt07lFg2C1GriaWLscOwubHBmUNQHYFmFenIi+XYB2bHfx+IT4pmCrzRenZacW50DNtMtdGUT4ZAm6HKNKs5VmLF2sQP1Gnb0cokJHeyuym/xa3OA7IfQMjLRiMaR3Kfj95Hdxv6UUPDRL18CVrCe7GSgRo0PJerPQEATVwQxvz6QXxW/y9mujW9D7wzBMN4CiFzZjDDRFC0xq55IPb3Bg54mqKVUvNBxxf4Uu8NnWYxThFPy5LRbFT2Cnjqb7wtr9hzgfU8Y110xUQLJC/Xf6xwRsoVxC9LH41MRvLkucdbprYR+rqwwSO5bCxn6RoUCrXNKwfFBkwjhvt1+cC/GSsOkkMumfIeWuuOHNXV4A7uSatvVTYe3RkwmPPaj17aJ0lizBLC2p+1IQQp3jCInGRHjnrxsTGjuUrWGk9KKqrtqBQw8/yZ5sl3nlYQq33ELrAbb8QtnGUymxhIlzhd5FZ/JGyT88UEP+0NfwsTzl11PX1BdVDRdSSh8QW7TwSejctv8XNVVcb5aTyAw/IA36GnhuJuKVBOlwg6i9rW6oIRXgnGKMJsqP2PMWkNRfZlRToDgoYnoziYhunIQmfm+/fzTHhT/vIyDFemtF6GN64IlsgRM=
-  file: "_packaging/appimage/out/VidCutter-${BUILD_VERSION}-x64.AppImage"
+  file_glob: true
+  file: "VidCutter*.AppImage"
+  skip_cleanup: true
   on:
     repo: ozmartian/vidcutter-appimage

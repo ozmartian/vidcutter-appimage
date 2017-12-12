@@ -26,7 +26,7 @@ install:
 - python3.5 setup.py build_ext -i
 - cd _packaging/appimage
 - "./build.sh"
-- mv "../out/VidCutter-*-x86_64.AppImage" "${TRAVIS_BUILD_DIR}/VidCutter-${BUILD_VERSION}-x64.AppImage"
+- find "${TRAVIS_BUILD_DIR}" -name VidCutter--x86_64.AppImage | xargs -I{} mv {} "${TRAVIS_BUILD_DIR}/VidCutter-${BUILD_VERSION}-x64.AppImage"
 
 script: echo "Done!"
 

@@ -27,8 +27,8 @@ install:
 
 script:
 - cd _packaging/appimage
-- source ./build.sh
-- find "${TRAVIS_BUILD_DIR}" -name VidCutter-*-x86_64.AppImage | xargs -I{} mv {} "${TRAVIS_BUILD_DIR}/VidCutter-${BUILD_VERSION}-x64.AppImage"
+- ./build.sh
+- mv ./out/VidCutter--x86_64.AppImage "${TRAVIS_BUILD_DIR}/VidCutter-${BUILD_VERSION}-x64.AppImage"
 - echo "Done!"
 
 notifications:

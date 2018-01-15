@@ -9,14 +9,17 @@ git:
 branches:
   only:
   - master
+
 env:
   global:
-    - BUILD_VERSION="5.5.0"
+  - BUILD_VERSION="5.5.0"
+  - secure: Uw8jWg5zQDigVUTrWkhWe0gxKBugxWQi7MLJjPIrg9YZsDXbLouJQAxvGVR0Rcr8RjXjk383Ob+jiMWp7WbSXT7HaNCc3DCqno2CxlzpN1WgRo9OAvdhWIOUTRuuLrI0B5TMCkhCu7WfpCyXY/UtwBWBddugF9xz8gQK/SBtgIyuJxRb4EH4iBl+c6igGUxKQ8KVaN/C+7PPONCA3TWHx65qyn+QcblAfTn0EcEKf7Stm+3eTZSwG2G0rctuoywAKGjQTlpihnKBh0R02kH15YU9byHc44EiNJwS99UVkc8pzPCGr+fiM+4m7H2IEc3b2N7Fcao0v99psXzi88bXXYf581lCVED+zVxFc1cI3gRt2p0ds6DR5FPMi3ZeoQLKanhqOg/rcPV0EPokoI+Sq2DLDtbgnNDxlGDfB0Q5vm+ILX36btsTq4/mKMBnauPmi1ePtHHxUiReYzNK4qRAQ8TpZMpicsHgOo2KAfZkHbJUVDtgn8eiMQnYn+6NHj0VAYB1Ef/8hCs1Yj8eXPLp+KF9NMY11JgmAJxi+ZcglWBS9rg4+mC+rHQGl6eDQTr5htPRdKteQ0k2eFmynmJW4C0ogNZf3ZJSKDWq5UnfhDjTwA9RrOEC2JKC9x0uM7BZqypj4ZaVGNoF5zCY3zyKytJUG0/A8sXH95rKqBZbVo8=
 
 before_install:
 - sudo add-apt-repository ppa:mc3man/testing6 -y
 - sudo apt-get -qq update
-- sudo apt-get install -y libmpv-dev libmpv1 python3-dev python3-setuptools libarchive13 wget desktop-file-utils aria2 fuse gnupg2 build-essential file libglib2.0-bin
+- sudo apt-get install -y libmpv-dev libmpv1 python3-dev python3-setuptools libarchive13
+  wget desktop-file-utils aria2 fuse gnupg2 build-essential file libglib2.0-bin
 
 install:
 - wget https://github.com/ozmartian/vidcutter/archive/${BUILD_VERSION}.tar.gz -O ./vidcutter.tar.gz
@@ -27,7 +30,7 @@ install:
 
 script:
 - cd _packaging/appimage
-- ./build.sh
+- "./build.sh"
 - mv ./out/VidCutter--x86_64.AppImage "${TRAVIS_BUILD_DIR}/VidCutter-${BUILD_VERSION}-x64.AppImage"
 - echo "Done!"
 
@@ -35,11 +38,13 @@ notifications:
   email: false
 
 before_deploy:
-  - git config --local user.name "Pete Alexandrou"
-  - git config --local user.email "pete@ozmartians.com"
-  - git tag -d "5.5.0"
-  - git push origin :refs/tags/5.5.0
-  - git tag -am v5.5.0 5.5.0
+- git config --local user.name "Pete Alexandrou"
+- git config --local user.email "pete@ozmartians.com"
+- git tag -d ${BUILD_VERSION}
+- git remote set-url origin https://ozmartian:${GITHUB_TOKEN}@github.com/ozmartian/vidcutter-appimage.git
+- git push origin :refs/tags/${BUILD_VERSION}
+- git tag -am v${BUILD_VERSION} ${BUILD_VERSION}
+
 deploy:
   provider: releases
   api_key:

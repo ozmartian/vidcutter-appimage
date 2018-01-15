@@ -37,7 +37,9 @@ notifications:
 before_deploy:
   - git config --local user.name "Pete Alexandrou"
   - git config --local user.email "pete@ozmartians.com"
-  - git tag -afm v5.5.0 5.5.0
+  - git tag -d "5.5.0"
+  - git push origin :refs/tags/5.5.0
+  - git tag -am v5.5.0 5.5.0
 deploy:
   provider: releases
   api_key:

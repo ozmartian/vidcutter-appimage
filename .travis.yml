@@ -3,7 +3,7 @@ os: linux
 dist: trusty
 group: edge
 sudo: required
-python: '3.5'
+python: '3.6'
 git:
   depth: 3
 branches:
@@ -22,11 +22,11 @@ before_install:
   wget desktop-file-utils aria2 fuse gnupg2 build-essential file libglib2.0-bin
 
 install:
-- wget https://github.com/ozmartian/vidcutter/archive/master.tar.gz -O ./vidcutter.tar.gz
+- wget https://github.com/ozmartian/vidcutter/archive/${BUILD_VERSION}.tar.gz -O ./vidcutter.tar.gz
 - tar -xvf ./vidcutter.tar.gz
-- mv vidcutter-master/* .
-- rm -rf vidcutter.tar.gz vidcutter-master
-- python3.5 setup.py build_ext -i
+- mv vidcutter-${BUILD_VERSION}/* .
+- rm -rf vidcutter.tar.gz vidcutter-${BUILD_VERSION}
+- python3 setup.py build_ext -i
 
 script:
 - cd _packaging/appimage
